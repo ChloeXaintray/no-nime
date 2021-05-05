@@ -5,7 +5,11 @@
 # Chloé XAINTRAY
 
 from board import Board
-from players import Players
+from computer import Computer
+from game import Game
 
-test = Board([1, 3, 5, 7])
-test.print()
+board = Board([1, 3, 5])
+game = Game(board)
+computer = Computer(board, game)
+print(computer.children_states())
+#board.print()
