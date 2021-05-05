@@ -8,8 +8,8 @@ from board import Board
 from computer import Computer
 from game import Game
 
-board = Board([1, 3, 5])
+board = Board([1, 3])
 game = Game(board)
 computer = Computer(board, game)
-print(computer.children_states())
+print(computer.minmax(board.state, 3))
 #board.print()
