@@ -17,6 +17,28 @@ def explain_state(state):
 
 
 def children_states(state, mark):
+    # 1 seule ligne avec plus d'un baton
+    if len(state) == 1 and state[0] > 1:
+        return [(mark.value,)]
+    # Suppression de l'avant dernière ligne avec dernière ligne qui contient 1 baton
+    if len(state) == 2 and state[0] == 1:
+        return [(1,)]
+    # Egalisation
+    if len(state) == 2 and state[0] < state[1]:
+        return [(state[0], state[0])]
+    # 3 lignes dont 2 lignes egales
+    if len(state) == 3:
+        if state[0] == state[1] or state[0] == state[2]:
+            return [(state[0], state[0])]
+        if state[1] == state[2]:
+            return [(state[1], state[1])]
+    # 3 lignes de différents niveaux de batons
+    #if len(state) == 3:
+
+    # obtenir (1,2,3)
+
+    # 1,1,n => 1,1,1 gagnant
+
     children = set()
     for index, value in enumerate(state):
         for i in range(value):

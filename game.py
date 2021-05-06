@@ -13,7 +13,7 @@ class Game:
 
         move = computer.get_best_move(self.board.state, 16)
         if move == -1 or move == 1:
-            self.board.state = -move
+            self.board.state = -1
         else:
             self.board.set_state(list(move))
 
@@ -31,7 +31,6 @@ class Game:
             current_board[row-1] -= sticks*(-mark.value)
         else:
             current_board[row - 1] -= sticks
-        print(current_board)
         self.board.set_state(current_board)
 
         if len(self.board.state) == 0:
@@ -49,9 +48,6 @@ class Game:
                 self.play_player()
 
         if check_winner(self.board.state) == 1:
-            print("Player1 is winner")
+            print("---Player1 is winner---")
         else:
-            print("Player2 is winner")
-
-
-#print(computer.get_computer_moves([-1, 3, 5],8)))
+            print("---Player2 is winner---")

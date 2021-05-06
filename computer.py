@@ -24,9 +24,8 @@ class Computer:
         for i in range(n):
             current_state = tuple(state)
             while check_winner(current_state) == 0:
-                (temp_state, mark) = explain_state(current_state)  # (2, 4, 5)
+                (temp_state, mark) = explain_state(current_state)
                 random_row = random.randrange(len(temp_state))
-
                 random_sticks = random.randrange(1, temp_state[random_row] + 1)
                 temp_list = list(temp_state)
                 temp_list[random_row] -= random_sticks  # pick the sticks
@@ -37,7 +36,7 @@ class Computer:
                         player_wins += 1
                     break
 
-                temp_list[0] *= mark.value
+                temp_list[0] *= -mark.value
                 current_state = tuple(temp_list)
 
         percent = player_wins / n
@@ -56,8 +55,7 @@ class Computer:
         if check_winner(node) != 0:
             return check_winner(node)
         if depth == 0:
-            print("t")
-            return 0 #self.compute_heuristic(10, node)
+            return self.compute_heuristic(20, node)
 
         state, mark = explain_state(node)
 
