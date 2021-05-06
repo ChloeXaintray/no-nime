@@ -18,20 +18,26 @@ class Game:
             self.board.set_state(list(move))
 
 
-
     def play_player(self):
         print("PLAYER PLAYS :")
 
         row = int(input("Enter the row:  "))
-        sticks = int(input("Enter number of sticks:  "))
+        while row < 1 or row > len(self.board.state):
+            row = int(input("Please enter a VALID row:  "))
+
+
+        sticks = int(input("Enter a number of sticks:  "))
+        while sticks < 1 or sticks > abs(self.board.state[row-1]):
+            sticks = int(input("Please enter a VALID number of sticks:  "))
 
         current_board = list(self.board.state)
         if row == 1:
             _, mark = explain_state(self.board.state)
-            current_board[row-1] -= sticks*(-mark.value)
+            current_board[row - 1] -= sticks * (-mark.value)
         else:
             current_board[row - 1] -= sticks
         self.board.set_state(current_board)
+
 
         if len(self.board.state) == 0:
             self.board.state = 1

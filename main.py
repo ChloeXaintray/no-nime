@@ -7,7 +7,7 @@
 from board import Board
 from game import Game
 
-board = Board([-1, 3, 5, 7])
+board = Board([-3, 3, 5, 7])
 game = Game(board)
 game.play()
 
