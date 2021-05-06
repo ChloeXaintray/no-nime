@@ -1,36 +1,13 @@
+import random
+from typing import Tuple
 from players import Players
-
-
-def explain_state(state):
-    if state[0] < 0:
-        temp_state = list(state)
-        temp_state[0] = - temp_state[0]
-        return tuple(temp_state), Players.PLAYER1
-    return state, Players.PLAYER2
-
-
-def children_states(state, mark):
-    children = []
-    for index, value in enumerate(state):
-        for i in range(value):
-            new_state = list(state)
-            new_state[index] = i
-            if 0 in new_state:
-                new_state.remove(0)
-            if len(new_state) > 0:
-                new_state[0] *= mark.value
-                children.append(tuple(new_state))
-            else:
-                children.append(-mark.value)
-
-    return children
+from static import explain_state, children_states, check_winner
 
 
 class Computer:
     def __init__(self, board, game):
         self.board = board
         self.game = game
-
 
     def get_best_move(self, node, depth):
         state, mark = explain_state(node)
@@ -41,6 +18,32 @@ class Computer:
                 return child
         return temp
 
+    def compute_heuristic(self, n: int, state: Tuple):
+        player_wins = 0
+        for i in range(n):
+            current_state = tuple(state)
+            while check_winner(current_state) == 0:
+                (temp_state, mark) = explain_state(current_state)  # (2, 4, 5)
+                random_row = random.randrange(len(temp_state))
+
+                random_sticks = random.randrange(1, temp_state[random_row] + 1)
+                temp_list = list(temp_state)
+                temp_list[random_row] -= random_sticks  # pick the sticks
+                temp_list = list(filter(lambda x: x != 0, temp_list))
+
+                if len(temp_list) == 0:
+                    if mark == Players.PLAYER2:
+                        player_wins += 1
+                    break
+
+                temp_list[0] *= mark.value
+                current_state = tuple(temp_list)
+
+        percent = player_wins / n
+
+        if percent > 0.5:
+            return 1
+        return -1
 
     def minmax(self, node, depth):
         """
@@ -49,10 +52,11 @@ class Computer:
         print(depth)
         """
 
-        if self.game.check_winner(node) != 0:
-            return self.game.check_winner(node)
+        if check_winner(node) != 0:
+            return check_winner(node)
         if depth == 0:
-            return 1  # heuristic
+            print("t")
+            return 0 #self.compute_heuristic(10, node)
 
         state, mark = explain_state(node)
 
