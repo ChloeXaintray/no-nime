@@ -5,14 +5,14 @@
 # Chloé XAINTRAY
 
 from board import Board
-from computer import Computer,children_states
 from game import Game
 
-
-board = Board([-1, -2])
+board = Board([-1, 3, 5])
 game = Game(board)
-computer = Computer(board, game)
-print(computer.get_computer_moves([1,2],4))
+game.play()
+
+
+
 #print(children_states([1, 3]))
 #print(computer.minmax(board.state, 4))
 #board.print()

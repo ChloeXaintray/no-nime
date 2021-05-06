@@ -9,4 +9,5 @@ class Board:
 
     def print(self):
         for value in self.state:
-            print(value*"|", f"{value}")
+            print(abs(value)*"|", f"{abs(value)}")
+        print("")

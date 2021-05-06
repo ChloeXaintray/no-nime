@@ -31,12 +31,15 @@ class Computer:
         self.board = board
         self.game = game
 
-    def get_computer_moves(self, node, depth):
-        children_path = {}
+
+    def get_best_move(self, node, depth):
         state, mark = explain_state(node)
+        temp = None
         for child in children_states(state, mark):
-            children_path[child] = self.minmax(child, depth)
-        return children_path
+            temp = child
+            if self.minmax(child, depth) == mark.value:
+                return child
+        return temp
 
 
     def minmax(self, node, depth):
@@ -49,7 +52,7 @@ class Computer:
         if self.game.check_winner(node) != 0:
             return self.game.check_winner(node)
         if depth == 0:
-            return 0  # heuristic
+            return 1  # heuristic
 
         state, mark = explain_state(node)
 
