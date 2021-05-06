@@ -11,8 +11,3 @@ board = Board([-1, 3, 5, 7])
 game = Game(board)
 game.play()
 
-
-
-#print(children_states([1, 3]))
-#print(computer.minmax(board.state, 4))
-#board.print()

@@ -8,6 +8,7 @@ class Computer:
     def __init__(self, board, game):
         self.board = board
         self.game = game
+        self.scores = {}
 
     def get_best_move(self, node, depth):
         state, mark = explain_state(node)
@@ -63,10 +64,19 @@ class Computer:
         if mark == Players.PLAYER1:
             maximum = -2
             for child in children_states(state, mark):
-                maximum = max(maximum, self.minmax(child, depth - 1))
+                if child not in self.scores:
+                    maximum = max(maximum, self.minmax(child, depth - 1))
+                    self.scores[child] = maximum
+                else:
+                    maximum = self.scores[child]
+
             return maximum
         else:
             minimum = 2
             for child in children_states(state, mark):
-                minimum = min(minimum, self.minmax(child, depth - 1))
+                if child not in self.scores:
+                    minimum = min(minimum, self.minmax(child, depth - 1))
+                    self.scores[child] = minimum
+                else:
+                    minimum = self.scores[child]
             return minimum
