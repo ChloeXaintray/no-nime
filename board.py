@@ -8,6 +8,6 @@ class Board:
         self.state = tuple(filter(lambda x: x != 0, row_list))
 
     def print(self):
-        for value in self.state:
-            print(abs(value)*"|", f"{abs(value)}")
+        for index, value in enumerate(self.state) :
+            print(index, " : ", abs(value)*"|", " (", f"{(abs(value))}", ")")
         print("")
