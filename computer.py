@@ -31,6 +31,14 @@ class Computer:
         self.board = board
         self.game = game
 
+    def get_computer_moves(self, node, depth):
+        children_path = {}
+        state, mark = explain_state(node)
+        for child in children_states(state, mark):
+            children_path[child] = self.minmax(child, depth)
+        return children_path
+
+
     def minmax(self, node, depth):
         """
         print('--------------------------')
