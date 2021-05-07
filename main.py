@@ -8,7 +8,7 @@ from board import Board
 from game import Game
 from players import Players
 
-board = Board([-1, 2])
+board = Board([-1, 3, 5])
 game = Game(board)
 game.play(Players.COMPUTER)
 
