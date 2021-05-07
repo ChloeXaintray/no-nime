@@ -28,14 +28,15 @@ class Game:
         self.board.print()
         print("PLAYER is playing ...")
 
-        row = int(input("Enter the row:  "))
-        while row < 1 or row > len(self.board.state):
-            row = int(input("Please enter a VALID row:  "))
+        row = input("Enter the row:  ")
+        while not row.isnumeric() or int(row) < 1 or int(row) > len(self.board.state):
+            row = input("Please enter a VALID row:  ")
+        row = int(row)
 
-
-        sticks = int(input("Enter a number of sticks:  "))
-        while sticks < 1 or sticks > abs(self.board.state[row-1]):
-            sticks = int(input("Please enter a VALID number of sticks:  "))
+        sticks = input("Enter a number of sticks:  ")
+        while not sticks.isnumeric() or int(sticks) < 1 or int(sticks) > abs(self.board.state[row-1]):
+            sticks = input("Please enter a VALID number of sticks:  ")
+        sticks = int(sticks)
 
         current_board = list(self.board.state)
         if row == 1:
