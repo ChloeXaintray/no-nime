@@ -3,15 +3,19 @@ from players import Players
 from static import check_winner
 
 
+
 class Game:
-    def __init__(self, board, turn=Players.PLAYER1):
+    def __init__(self, board, turn=Players.COMPUTER):
         self.board = board
         self.turn = turn
 
     def play_computer(self, computer):
-        print("COMPUTER PLAYS :")
+        if check_winner(self.board.state) != 0:
+            return
+        self.board.print()
+        print("COMPUTER is playing ...")
 
-        move = computer.get_best_move(self.board.state, 16)
+        move = computer.get_best_move(self.board.state, 20)
         if move == -1 or move == 1:
             self.board.state = -1
         else:
@@ -19,7 +23,10 @@ class Game:
 
 
     def play_player(self):
-        print("PLAYER PLAYS :")
+        if check_winner(self.board.state) != 0:
+            return
+        self.board.print()
+        print("PLAYER is playing ...")
 
         row = int(input("Enter the row:  "))
         while row < 1 or row > len(self.board.state):
@@ -43,17 +50,18 @@ class Game:
             self.board.state = 1
 
 
-    def play(self):
+    def play(self, starter=Players.COMPUTER):
         computer = Computer(self.board, self)
         
         while check_winner(self.board.state) == 0:
-            self.board.print()
-            self.play_computer(computer)
-            if check_winner(self.board.state) == 0:
-                self.board.print()
+            if starter.value == 1:
+                self.play_computer(computer)
                 self.play_player()
+            else :
+                self.play_player()
+                self.play_computer(computer)
 
         if check_winner(self.board.state) == 1:
-            print("---Player1 is winner---")
+            print("\n---Computer wins---")
         else:
-            print("---Player2 is winner---")
+            print("\n---Player wins---")

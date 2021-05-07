@@ -9,5 +9,5 @@ class Board:
 
     def print(self):
         for index, value in enumerate(self.state) :
-            print(index, " : ", abs(value)*"|", " (", f"{(abs(value))}", ")")
+            print(index+1, " : ", abs(value)*"|", " (", f"{(abs(value))}", ")")
         print("")

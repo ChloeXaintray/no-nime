@@ -2,5 +2,5 @@ from enum import Enum
 
 
 class Players(Enum):
-    PLAYER1 = 1
-    PLAYER2 = -1
+    COMPUTER = 1
+    PLAYER = -1
