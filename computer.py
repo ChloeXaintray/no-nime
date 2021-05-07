@@ -48,7 +48,7 @@ class Computer:
         if check_winner(node) != 0:
             return check_winner(node)
         if depth == 0:
-            return self.compute_heuristic(50, node)
+            return self.compute_heuristic(20, node)
         if node in self.scores:
             return self.scores[node]
 
