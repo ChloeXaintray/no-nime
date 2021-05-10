@@ -7,18 +7,18 @@ class Board:
         row_list = []
 
         user_choice = input("Enter 1 to generate a random board, 2 to create it: ")
-        while not user_choice.isnumeric() or int(user_choice) < 1 or int(user_choice) > 2:
-            user_choice = input("Enter 1 or 2 ")
+        while not user_choice.isnumeric() or int(user_choice) < 1 or int(user_choice) > 3:
+            user_choice = input("Enter 1 or 2 or 3")
         user_choice = int(user_choice)
         print(user_choice)
 
         if user_choice == 1:
 
-            rows = random.randrange(1, 5, 1)
+            rows = random.randrange(3, 5, 1)
             for i in range(rows):
-                stick = random.randrange(1, 50, 1)
+                stick = random.randrange(20, 30, 1)
                 row_list.append(int(stick))
-        else:
+        elif user_choice == 2 :
             rows = input("Enter a number of row (between 1 and 10):  ")
             while not rows.isnumeric() or int(rows) < 1 or int(rows) > 10:
                 rows = input("Enter a VALID number of rows:  ")
@@ -30,6 +30,9 @@ class Board:
                 while not stick.isnumeric() or int(stick) < 1 or int(stick) > 50:
                     stick = input("Enter a VALID number of rows:  ")
                 row_list.append(int(stick))
+
+        else :
+            row_list =[-20, 24, 25, 30, 31]
 
         row_list.sort()
         row_list[0] *= -1
@@ -43,7 +46,7 @@ class Board:
         self.state = tuple(filter(lambda x: x != 0, row_list))
 
     def print(self):
-        print(self.state)
+        #print(self.state)
         for index, value in enumerate(self.state) :
             print(index+1, " : ", abs(value)*"|", " (", f"{(abs(value))}", ")")
         print("")

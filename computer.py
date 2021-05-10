@@ -5,6 +5,8 @@ import static
 from players import Players
 from static import explain_state, children_states, check_winner, is_winning_board
 
+NHEURISTIC = 20
+DEPTH = 3
 
 class Computer:
     def __init__(self, board, game):
@@ -13,12 +15,15 @@ class Computer:
         self.scores = {}
         self.cpt_minmax = 0
 
-    def get_best_move(self, node, depth):
+    def get_best_move(self, node):
         state, mark = explain_state(node)
         temp = None
+        value = self.minmax(node, DEPTH, -2, 2)
+        print("score : ",value)
+
         for child in children_states(state, mark):
             temp = child
-            if self.minmax(child, depth, -2, 2) == mark.value:
+            if self.minmax(child, DEPTH-1, -2, 2) == value:
                 return child
         return temp
 
@@ -47,11 +52,8 @@ class Computer:
                 temp_list[0] *= -mark.value
                 current_state = tuple(temp_list)
 
-        percent = cpt_victory / n
-
-        if percent > 0.5:
-            return 1
-        return -1
+        percent = cpt_victory / (2*n)
+        return percent*2-1
 
     def minmax(self, node, depth, alpha, beta):
         if node in self.scores:
@@ -63,7 +65,7 @@ class Computer:
         self.cpt_minmax += 1
 
         if depth == 0:
-            self.scores[node] = self.compute_heuristic(2, node)
+            self.scores[node] = self.compute_heuristic(NHEURISTIC, node)
             return self.scores[node]
 
         state, mark = explain_state(node)
@@ -72,18 +74,18 @@ class Computer:
             for child in children_states(state, mark):
                 maximum = max(maximum, self.minmax(child, depth - 1, alpha, beta))
                 alpha = max(maximum, alpha)
-                self.scores[node] = maximum
                 if alpha >= beta:
                     break
+            self.scores[node] = maximum
             return maximum
         else:
             minimum = 2
             for child in children_states(state, mark):
                 minimum = min(minimum, self.minmax(child, depth - 1, alpha, beta))
                 beta = min(minimum, beta)
-                self.scores[node] = minimum
                 if beta <= alpha:
                     break
+            self.scores[node] = minimum
             return minimum
 
     def reset_score(self):

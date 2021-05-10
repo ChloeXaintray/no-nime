@@ -19,7 +19,7 @@ class Game:
         self.board.print()
         print("COMPUTER is playing ...")
 
-        move = computer.get_best_move(self.board.state, 30)
+        move = computer.get_best_move(self.board.state)
         if move == -1 or move == 1:
             self.board.state = -1
         else:
