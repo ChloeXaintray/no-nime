@@ -10,6 +10,7 @@ class Computer:
         self.board = board
         self.game = game
         self.scores = {}
+        self.cpt_minmax = 0
 
     def get_best_move(self, node, depth):
         state, mark = explain_state(node)
@@ -54,8 +55,10 @@ class Computer:
     def minmax(self, node, depth, alpha, beta):
         if node in self.scores:
             return self.scores[node]
+
         if check_winner(node) != 0:
             return check_winner(node)
+        self.cpt_minmax += 1
         if depth == 0:
             self.scores[node] = self.compute_heuristic(2, node)
             return self.scores[node]
@@ -82,3 +85,6 @@ class Computer:
 
     def reset_score(self):
         self.scores = {}
+
+    def reset_cpt_minmax(self):
+        self.cpt_minmax = 0

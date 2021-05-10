@@ -10,8 +10,10 @@ class Game:
         self.turn = turn
 
     def play_computer(self, computer):
-        start_time = time.time()
         computer.reset_score()
+        computer.reset_cpt_minmax()
+
+        start_time = time.time()
         if check_winner(self.board.state) != 0:
             return
         self.board.print()
@@ -23,6 +25,7 @@ class Game:
         else:
             self.board.set_state(list(move))
         print("--- %s seconds ---" % (time.time() - start_time))
+        print("cpt minmax: ", computer.cpt_minmax)
 
     def play_player(self):
         if check_winner(self.board.state) != 0:
@@ -55,14 +58,19 @@ class Game:
 
     def play(self, starter=Players.COMPUTER):
         computer = Computer(self.board, self)
-        
+        computer2 = Computer(self.board, self)
+
+        # while check_winner(self.board.state) == 0:
+        #     if starter.value == 1:
+        #         self.play_computer(computer)
+        #         self.play_player()
+        #     else:
+        #         self.play_player()
+        #         self.play_computer(computer)
+
         while check_winner(self.board.state) == 0:
-            if starter.value == 1:
-                self.play_computer(computer)
-                self.play_player()
-            else:
-                self.play_player()
-                self.play_computer(computer)
+            self.play_computer(computer)
+            self.play_computer(computer2)
 
         if check_winner(self.board.state) == 1:
             print("\n---Computer wins---")
