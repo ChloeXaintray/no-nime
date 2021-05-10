@@ -5,6 +5,7 @@ import static
 from players import Players
 from static import explain_state, children_states, check_winner, is_winning_board
 
+
 class Computer:
     def __init__(self, board, game):
         self.board = board
@@ -58,7 +59,9 @@ class Computer:
 
         if check_winner(node) != 0:
             return check_winner(node)
+
         self.cpt_minmax += 1
+
         if depth == 0:
             self.scores[node] = self.compute_heuristic(2, node)
             return self.scores[node]

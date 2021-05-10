@@ -19,7 +19,7 @@ class Game:
         self.board.print()
         print("COMPUTER is playing ...")
 
-        move = computer.get_best_move(self.board.state, 20)
+        move = computer.get_best_move(self.board.state, 30)
         if move == -1 or move == 1:
             self.board.state = -1
         else:
@@ -51,10 +51,8 @@ class Game:
             current_board[row - 1] -= sticks
         self.board.set_state(current_board)
 
-
         if len(self.board.state) == 0:
             self.board.state = 1
-
 
     def play(self, starter=Players.COMPUTER):
         computer = Computer(self.board, self)
