@@ -16,7 +16,7 @@ class Computer:
         temp = None
         for child in children_states(state, mark):
             temp = child
-            if self.minmax(child, depth) == mark.value:
+            if self.minmax(child, depth, -2, 2) == mark.value:
                 return child
         return temp
 
@@ -51,7 +51,7 @@ class Computer:
             return 1
         return -1
 
-    def minmax(self, node, depth):
+    def minmax(self, node, depth, alpha, beta):
         if node in self.scores:
             return self.scores[node]
         if check_winner(node) != 0:
@@ -64,14 +64,20 @@ class Computer:
         if mark == Players.COMPUTER:
             maximum = -2
             for child in children_states(state, mark):
-                maximum = max(maximum, self.minmax(child, depth - 1))
+                maximum = max(maximum, self.minmax(child, depth - 1, alpha, beta))
+                alpha = max(maximum, alpha)
                 self.scores[node] = maximum
+                if alpha >= beta:
+                    break
             return maximum
         else:
             minimum = 2
             for child in children_states(state, mark):
-                minimum = min(minimum, self.minmax(child, depth - 1))
+                minimum = min(minimum, self.minmax(child, depth - 1, alpha, beta))
+                beta = min(minimum, beta)
                 self.scores[node] = minimum
+                if beta <= alpha:
+                    break
             return minimum
 
     def reset_score(self):
