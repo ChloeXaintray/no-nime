@@ -11,5 +11,4 @@ from players import Players
 
 board = Board()
 game = Game(board)
-game.play(Players.PLAYER)
-
+game.play(Players.COMPUTER)

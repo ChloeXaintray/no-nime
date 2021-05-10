@@ -1,7 +1,9 @@
 import random
 from typing import Tuple
+
+import static
 from players import Players
-from static import explain_state, children_states, check_winner
+from static import explain_state, children_states, check_winner, is_winning_board
 
 class Computer:
     def __init__(self, board, game):
@@ -19,11 +21,16 @@ class Computer:
         return temp
 
     def compute_heuristic(self, n: int, state: Tuple):
-        player_wins = 0
+        cpt_victory = 0
         for i in range(n):
             current_state = tuple(state)
             while check_winner(current_state) == 0:
                 (temp_state, mark) = explain_state(current_state)
+                if is_winning_board(temp_state):
+                    if mark == Players.COMPUTER:
+                        cpt_victory += 1
+                    break
+
                 random_row = random.randrange(len(temp_state))
                 random_sticks = random.randrange(1, temp_state[random_row] + 1)
                 temp_list = list(temp_state)
@@ -32,24 +39,25 @@ class Computer:
 
                 if len(temp_list) == 0:
                     if mark == Players.PLAYER:
-                        player_wins += 1
+                        cpt_victory += 1
                     break
 
                 temp_list[0] *= -mark.value
                 current_state = tuple(temp_list)
 
-        percent = player_wins / n
+        percent = cpt_victory / n
 
         if percent > 0.5:
             return 1
         return -1
 
     def minmax(self, node, depth):
+        if node in self.scores:
+            return self.scores[node]
         if check_winner(node) != 0:
             return check_winner(node)
         if depth == 0:
-            return self.compute_heuristic(20, node)
-        if node in self.scores:
+            self.scores[node] = self.compute_heuristic(2, node)
             return self.scores[node]
 
         state, mark = explain_state(node)
@@ -65,3 +73,6 @@ class Computer:
                 minimum = min(minimum, self.minmax(child, depth - 1))
                 self.scores[node] = minimum
             return minimum
+
+    def reset_score(self):
+        self.scores = {}

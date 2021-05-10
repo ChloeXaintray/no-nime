@@ -1,7 +1,7 @@
 from computer import Computer, explain_state
 from players import Players
 from static import check_winner
-
+import time
 
 
 class Game:
@@ -10,6 +10,8 @@ class Game:
         self.turn = turn
 
     def play_computer(self, computer):
+        start_time = time.time()
+        computer.reset_score()
         if check_winner(self.board.state) != 0:
             return
         self.board.print()
@@ -20,7 +22,7 @@ class Game:
             self.board.state = -1
         else:
             self.board.set_state(list(move))
-
+        print("--- %s seconds ---" % (time.time() - start_time))
 
     def play_player(self):
         if check_winner(self.board.state) != 0:
@@ -58,7 +60,7 @@ class Game:
             if starter.value == 1:
                 self.play_computer(computer)
                 self.play_player()
-            else :
+            else:
                 self.play_player()
                 self.play_computer(computer)
 
