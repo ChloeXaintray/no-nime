@@ -14,9 +14,9 @@ class Board:
 
         if user_choice == 1:
 
-            rows = random.randrange(1, 10, 1)
+            rows = random.randrange(1, 5, 1)
             for i in range(rows):
-                stick = random.randrange(1, 100, 1)
+                stick = random.randrange(1, 50, 1)
                 row_list.append(int(stick))
         else:
             rows = input("Enter a number of row (between 1 and 10):  ")
@@ -26,11 +26,12 @@ class Board:
 
             for i in range(rows):
                 print("Row ", i + 1)
-                stick = input("Enter a number of stick (between 1 and 100):  ")
-                while not stick.isnumeric() or int(stick) < 1 or int(stick) > 100:
+                stick = input("Enter a number of stick (between 1 and 50):  ")
+                while not stick.isnumeric() or int(stick) < 1 or int(stick) > 50:
                     stick = input("Enter a VALID number of rows:  ")
                 row_list.append(int(stick))
 
+        row_list.sort()
         row_list[0] *= -1
         print(row_list)
 
